@@ -3,7 +3,8 @@
 
 <launch>
 
-  <arg name="camera_name"/>  
+  <arg name="camera_name"
+       default="depstech"/>
   <arg name="device"
        default="/dev/video0"/>
   <arg name="camera_info_url"
@@ -61,5 +62,13 @@
 	pkg="tf"
 	type="static_transform_publisher"
 	args="1 2 3 0 -3.141 0 /world /$(arg camera_name) 10"/>
+
+  <!-- display video using simple ros image_view -->
+  <node name="$(arg camera_name)"
+	pkg="image_view"
+	type="image_view"
+	args="image:=/$(arg camera_name)/image_raw">
+    <param name="autosize" value="True" />
+  </node>
 
 </launch>
